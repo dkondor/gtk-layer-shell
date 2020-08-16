@@ -269,6 +269,11 @@ on_window_destroy(GtkWindow *_window, void *_data)
     gtk_main_quit ();
 }
 
+static void popup_clicked(GtkButton* btn, void* data)
+{
+	show_popup_window((GtkWindow*)data);
+}
+
 static GtkWidget *
 layer_window_new ()
 {
@@ -337,6 +342,11 @@ layer_window_new ()
             GtkWidget *margin_and_version_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
             gtk_box_pack_start (GTK_BOX (margin_and_version_box),
                                 margin_control_new (gtk_window, default_margins),
+                                TRUE, FALSE, 0);
+            GtkWidget* btn = gtk_button_new_with_label("Create popup");
+            g_signal_connect (btn, "clicked", G_CALLBACK (popup_clicked), gtk_window);
+            gtk_box_pack_start (GTK_BOX (margin_and_version_box),
+                                btn,
                                 TRUE, FALSE, 0);
             gtk_box_pack_start (GTK_BOX (margin_and_version_box),
                                 version_info_new (),

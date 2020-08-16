@@ -58,4 +58,6 @@ mscl_toggles_new (GtkWindow *layer_window,
 GtkWidget *
 menu_bar_new (GtkWindow *layer_window);
 
+void show_popup_window (GtkWindow *parent);
+
 #endif // GTK_LAYER_DEMO_H
