@@ -65,6 +65,7 @@ static void
 custom_shell_surface_on_window_map (GtkWidget *widget, CustomShellSurface *self)
 {
     g_return_if_fail (GTK_WIDGET (self->private->gtk_window) == widget);
+    printf("custom_shell_surface_on_window_map(): %p\n", widget);
 
     GdkWindow *gdk_window = gtk_widget_get_window (GTK_WIDGET (self->private->gtk_window));
     g_return_if_fail (gdk_window);
@@ -197,6 +198,7 @@ struct xdg_popup* custom_shell_surface_add_popup (CustomShellSurface *self,
 // Unamps all popups and then calls virtual->unmap()
 void custom_shell_surface_unmap (CustomShellSurface *self)
 {
+	printf("custom_shell_surface_unmap(): %p\n", self->private->gtk_window);
     // Since we have to unmap *before* the default GTK handler (so we delete our objects before the wl_surface gets
     // deleted), we also unmap before the GTK logic kicks in that unmaps children before parents. That means we have to
     // handle that ourselves.

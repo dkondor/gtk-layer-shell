@@ -83,6 +83,7 @@ xdg_popup_handle_popup_done (void *data,
 
     XdgPopupSurface *self = data;
     GtkWindow *gtk_window = custom_shell_surface_get_gtk_window ((CustomShellSurface *)self);
+    printf("xdg_popup_handle_popup_done(): %p\n", gtk_window);
     gtk_widget_unmap (GTK_WIDGET (gtk_window));
 }
 
@@ -223,6 +224,7 @@ xdg_popup_surface_get_popup (CustomShellSurface *super,
 
     if (!self->xdg_surface) {
         g_critical ("xdg_popup_surface_get_popup () called when the xdg surface wayland object has not yet been created");
+        abort();
         return NULL;
     }
 
