@@ -10,6 +10,7 @@
  */
 
 #include "gtk-layer-demo.h"
+#include <unistd.h>
 
 static void
 on_close_clicked (GtkMenuItem *_item, GtkWindow *layer_window)
@@ -17,6 +18,16 @@ on_close_clicked (GtkMenuItem *_item, GtkWindow *layer_window)
     (void)_item;
 
     gtk_window_close (layer_window);
+}
+
+static void
+final_item_activated (GtkMenuItem *_item, gpointer _data)
+{
+    (void)_item;
+    (void)_data;
+
+    usleep (60000); // matches BROWSE_TIMEOUT from gtktooltip.c
+    printf ("\n    => final menu item activated <= \n\n");
 }
 
 GtkWidget *
@@ -54,6 +65,7 @@ menu_bar_new (GtkWindow *layer_window)
                                 gtk_menu_item_set_submenu (GTK_MENU_ITEM (submenu_item), nested_menu);
                                 {
                                     GtkWidget *submenu_item = gtk_menu_item_new_with_label ("Final item");
+                                    g_signal_connect (G_OBJECT (submenu_item), "activate", G_CALLBACK (final_item_activated), NULL);
                                     gtk_widget_set_tooltip_text (submenu_item, "Final item tooltip");
                                     gtk_menu_shell_append (GTK_MENU_SHELL (nested_menu), submenu_item);
                                 }
